@@ -44,10 +44,10 @@ async function main() {
 	const date = new Date();
 	date.setDate(date.getDate() - 3);
 	const dateStr = date.toISOString().split('T')[0];
-	console.log('task', dateStr);
+	console.log('task start: date >=', date.toISOString());
 
 	const response = await fetch(
-		`https://api.github.com/search/repositories?sort=stars&order=desc&per_page=20&q=created%3A%3E${dateStr}`
+		`https://api.github.com/search/repositories?sort=stars&order=desc&per_page=100&q=created%3A%3E${dateStr}`
 	)
 	const repositories = await response.json() as { items: IRepository[] };
 	let list = repositories.items.map((item: IRepository) => ({
