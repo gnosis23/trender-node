@@ -37,6 +37,7 @@ type IRepository = {
 	owner: {
 		login?: string;
 		repos_url?: string;
+		html_url?: string;
 	};
 };
 
@@ -54,7 +55,7 @@ async function main() {
 		id: item.id,
 		language: item?.language,
 		ownerName: item.owner?.login,
-		ownerUrl: item.owner?.repos_url,
+		ownerUrl: item.owner?.html_url,
 		name: item.name,
 		star: item.stargazers_count,
 		description: item.description,
