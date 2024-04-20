@@ -1,13 +1,18 @@
-FROM node:latest
+# use the official Bun image
+# see all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:1
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package.json .
+COPY package.json bun.lockb main.ts .
+RUN bun install --frozen-lockfile --production
 
-COPY main.ts .
+# [optional] tests & build
+ENV NODE_ENV=production
+RUN bun test
+RUN bun run build
 
-RUN npm config set registry https://registry.npmmirror.com/
-
-RUN npm install
-
-CMD ["npm", "run", "start"]
+# run the app
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "main.ts" ]
