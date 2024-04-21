@@ -1,12 +1,15 @@
 # trender node
+
 drizzle orm demo
 
 ## build
+
 ```
 docker build -t trender-node:v1.0.0 .
 ```
 
 ## run
+
 ```bash
 # create mysql if no local
 cd db

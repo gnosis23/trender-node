@@ -4,16 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bun run main.ts"
+    "dev": "ts-node main.ts",
+    "build": "tsc",
+    "start": "node ./dist/main.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.29.4",
     "mysql2": "^3.9.2"
   },
   "devDependencies": {
-    "@types/bun": "^1.0.0"
+    "@types/node": "^20.11.24",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

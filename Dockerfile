@@ -1,18 +1,20 @@
-# use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1
+FROM node:18-alpine
 
-WORKDIR /usr/src/app
+RUN apk add --no-cache libc6-compat
 
-COPY package.json bun.lockb main.ts .
-RUN bun install --frozen-lockfile --production
+WORKDIR /app
 
-# [optional] tests & build
-ENV NODE_ENV=production
-RUN bun test
-RUN bun run build
+COPY package.json package-lock.json tsconfig.json ./
 
-# run the app
-USER bun
-EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "main.ts" ]
+RUN npm ci
+
+COPY main.ts .
+
+RUN npm run build
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nodejs
+
+USER nodejs
+
+CMD ["npm", "run", "start"]
